@@ -3,13 +3,14 @@
 ## Milestones:
 - [x] Define JSON schema that returns all the cars in a pickup station
 - [x] Define Upsell mvp logic
-- [ ] Define JSON schema that returns the vehicle alt
+- [x] Define JSON schema that returns the vehicle alt
+- [ ] Create Mock dataset (20 vehicles across 4 different stations)
 - [ ] Create API endpoints for the two items above
 - [ ] Create logic to return potential vehicles to be upsold based on location (L2)
 
 ## JSON schema that returns all the vehicles in a station
 
-JSON schema of a vehicle
+### JSON schema of a vehicle
 ```yaml
 vehicle:
     id: # uuid
@@ -20,19 +21,19 @@ vehicle:
     bagsCount: # 1
     passangerCount: # 3
     groupType: # sedan
-    tyreType: # winter tyres, all-year tyres
+    tyreType: # winter tyres, all-year tyres (skipped)
     transmissionType: # automatic, manual
     fuelType: # petrol, electric
-    isNewCar: # true
+    isNewCar: # true (skipped)
     isRecommended: # false (can be skipped)
-    isMoreLuxury: # false (needed)
+    isMoreLuxury: # false (skipped)
     isExcitingDiscount: # false (needed)
     attributes: [] # list of UI elements that are displayed alongside the car image (skipped)
     vehicleStatus: # Available
     vehicleCost: 
         currency: # EUR
         value: # 36400 <-- purchase cost of the vehicle
-    upsellReasons: [] # list of reasons of the upsell
+    upsellReasons: [] # list of reasons of the upsell (skipped)
     pricing:
         currency: # EUR
         pricePerDay: # 35.99
@@ -44,14 +45,48 @@ vehicle:
         latitude: # 48.3558
         longitude: # 11.7861
     avaialbility:
-        isAvailable: # true
+        isAvailable: # true (skipped)
         availableFrom: # timestamp availabile from
         availableUntil: # timestamp available until 
     flags: # can be skiped 
     tags: # can be skipped
 ```
+filtered fields, other dummmy val:
+- ! can be generated using `math.random()`
+- / can be generated based on a catalogue
+- & must be manually adjusted
+```yaml
+vehicle:
+    id: ! # uuid
+    brand: / # vw
+    model: / # golf
+    images: [] # link.png
+    bagsCount: ! # 1
+    passangerCount: ! # 3
+    groupType: / # Sedan, SUV, Van, Station, Convertible
+    transmissionType: / # automatic, manual
+    fuelType: / # petrol, electric 
+    isExcitingDiscount: ! # true, false
+    vehicleStatus: ! # Available, Booked
+    vehicleCost !: 
+        currency: # EUR (hardcoded)
+        value: # 36400 <-- purchase cost of the vehicle (determines the luxury)
+    pricing:
+        currency: # EUR (hardcoded)
+        pricePerDay: ! # 35.99
+        originalPricePerDay: ! # 39.99
+        discountPercentage: ! # 10
+        totalPrice: ! # 143.96 <-- for the duration of the stay
+    location: NEW FIELD
+        stationId: & # MUC001
+        latitude: & # 48.3558
+        longitude: & # 11.7861
+    avaialbility:
+        availableFrom: # timestamp availabile from
+        availableUntil: # timestamp available until 
+```
 
-JSON schema of a station
+### JSON schema of a station
 ```yaml
 station:
     stationId: # MUC001
