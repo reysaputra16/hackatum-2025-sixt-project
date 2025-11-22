@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import datetime
 from flask import Flask, jsonify, request 
+from flask_cors import CORS
 import requests
 import os
 import numpy as np
@@ -8,6 +9,7 @@ import json
 import math
 
 app = Flask(__name__)
+CORS(app)
 root = '/api'
 
 # conncet to database
@@ -85,7 +87,7 @@ def get_all_vehicles():
     output = []
     for vehicle in vehicles:
         output.append(_vehicle_dict_maker(vehicle))
-    return(output)
+    return jsonify(output)
 
 @app.route(root + '/vehicles/locations/<location>', methods=['GET'])
 def get_all_vehicles_by_location(location):
@@ -94,7 +96,7 @@ def get_all_vehicles_by_location(location):
     output = []
     for vehicle in vehicles:
         output.append(_vehicle_dict_maker(vehicle))
-    return(output)
+    return jsonify(output)
 
 
 # get all vehicles
@@ -102,7 +104,7 @@ def get_all_vehicles_by_location(location):
 def get_vehicles(id):
     cursor.execute('SELECT * FROM vehicles WHERE id = ?', (id,))
     vehicle = cursor.fetchone()
-    return(_vehicle_dict_maker(vehicle))
+    return _vehicle_dict_maker(vehicle)
 
 @app.route(root + '/availableVehicles', methods=['GET'])
 def get_all_available():
@@ -111,11 +113,11 @@ def get_all_available():
     output = []
     for vehicle in vehicles:
         output.append(_vehicle_dict_maker(vehicle))
-    return(output)
+    return jsonify(output)
 
 @app.route(root + '/locations_distance/<lat>/<long>', methods=['GET'])
 def get_distance_to_locations(lat, long):
-    return calculate_haversine((float(lat), float(long)), locations)
+    return jsonify(calculate_haversine((float(lat), float(long)), locations))
 
 
 @app.route(root + '/availableVehicles/locations/<location_name>', methods=['GET'])
@@ -125,7 +127,7 @@ def get_all_available_by_location(location_name):
     output = []
     for vehicle in vehicles:
         output.append(_vehicle_dict_maker(vehicle))
-    return(output)
+    return jsonify(output)
 
 @app.route(root + '/upsell/<booked_id>/<lat>/<long>', methods=['GET'])
 def get_upsell(booked_id, lat, long):
@@ -181,7 +183,8 @@ def get_upsell(booked_id, lat, long):
     final_vehicles = []
     for id in final_ids:
         final_vehicles.append(get_vehicles(id))
-    return(final_vehicles)
+    
+    return final_vehicles
     
     
 def _similarity_scoring(vehicle_1, vehicle_2):
@@ -210,6 +213,4 @@ def _similarity_scoring(vehicle_1, vehicle_2):
 
 if __name__ == '__main__':
     coords = (48.20086835400505,11.627775696209682)
-    print(calculate_haversine(coords, locations))
-    print(get_upsell(19 ,coords[0], coords[1]))
     app.run(port=8080)
