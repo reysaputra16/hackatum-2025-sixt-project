@@ -1,5 +1,5 @@
 interface CarInformation {
-  id: number;
+  id: string;
   brand: string;
   image: string;
   model: string;

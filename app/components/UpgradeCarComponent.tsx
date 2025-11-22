@@ -14,7 +14,7 @@ import { redirect } from "next/navigation";
 const carList: UpgradeCarProps[] = [
   {
     car: {
-      id: 230102390123,
+      id: "230102390123",
       brand: "BMW",
       image: sixtCar.src,
       model: "X5",
@@ -32,7 +32,7 @@ const carList: UpgradeCarProps[] = [
   },
   {
     car: {
-      id: 32959245,
+      id: "32959245",
       brand: "BMW",
       image: sixtCar.src,
       model: "X5",
@@ -50,7 +50,7 @@ const carList: UpgradeCarProps[] = [
   },
   {
     car: {
-      id: 30129309213,
+      id: "30129309213",
       brand: "BMW",
       image: sixtCar.src,
       model: "X5",
@@ -68,7 +68,7 @@ const carList: UpgradeCarProps[] = [
   },
   {
     car: {
-      id: 203912039,
+      id: "203912039",
       brand: "BMW",
       image: sixtCar.src,
       model: "X5",
@@ -86,7 +86,7 @@ const carList: UpgradeCarProps[] = [
   },
   {
     car: {
-      id: 994938294,
+      id: "994938294",
       brand: "BMW",
       image: sixtCar.src,
       model: "X5",
