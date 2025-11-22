@@ -1,4 +1,5 @@
 interface CarInformation {
+  id: number;
   brand: string;
   image: string;
   model: string;
@@ -9,4 +10,11 @@ interface CarInformation {
   tyreType: string;
   color: string;
   passengerCount: number;
+  originalPricePerDay: number;
+}
+
+interface UpgradeCarProps {
+  car: CarInformation;
+  isUserLocation: boolean;
+  distance: number; // In km
 }

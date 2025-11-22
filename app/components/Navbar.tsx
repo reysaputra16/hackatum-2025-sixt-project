@@ -1,5 +1,5 @@
 import React from "react";
-import sixtLogo from "../../../public/sixt-logo.png";
+import sixtLogo from "../../public/sixt-logo.png";
 import { redirect } from "next/navigation";
 
 const Navbar = () => {
@@ -16,8 +16,18 @@ const Navbar = () => {
         />
         {/* Options */}
         <div className="flex flex-row space-x-10">
-          <button className="text-gray-700 font-medium">Help</button>
-          <button className="text-gray-700 font-medium">Contact</button>
+          <button
+            className="text-gray-700 font-medium cursor-pointer hover:text-gray-600"
+            onClick={() => redirect("https://about.sixt.com/en/newsroom/")}
+          >
+            News
+          </button>
+          <button
+            className="text-gray-700 font-medium cursor-pointer hover:text-gray-600"
+            onClick={() => redirect("https://www.sixt.com/help-center/")}
+          >
+            Help
+          </button>
         </div>
       </nav>
     </div>

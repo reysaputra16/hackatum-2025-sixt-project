@@ -11,14 +11,16 @@ import {
   Palette,
   Users,
 } from "lucide-react";
-import Navbar from "./components/Navbar";
-import ChosenCarComponent from "./components/ChosenCarComponent";
+import Navbar from "../components/Navbar";
+import ChosenCarComponent from "../components/ChosenCarComponent";
 import { useState } from "react";
-import UpgradeCarComponent from "./components/UpgradeCarComponent";
+import UpgradeCarComponent from "../components/UpgradeCarComponent";
+import { redirect } from "next/navigation";
 
 const bookingReference = "123ABC";
 
 const chosenCar: CarInformation = {
+  id: 30205,
   brand: "VW",
   image: sixtCar.src,
   model: "Golf",
@@ -29,6 +31,7 @@ const chosenCar: CarInformation = {
   tyreType: "All-Year",
   color: "Gray",
   passengerCount: 5,
+  originalPricePerDay: 38.55,
 };
 
 export default function PrototypeApp() {
@@ -64,8 +67,8 @@ export default function PrototypeApp() {
                   <button
                     className="text-white bg-orange-500 w-fit rounded-xl py-4 px-8 flex flex-row space-x-2 hover:cursor-pointer shadow-lg"
                     onClick={() => {
-                      setHideUpgradeOption(!hideUpgradeOption);
-                      setHideChosenCar(!hideChosenCar);
+                      setHideChosenCar(true);
+                      redirect("upgrade");
                     }}
                   >
                     <ArrowBigRight />
@@ -79,7 +82,7 @@ export default function PrototypeApp() {
             {!hideUpgradeOption ? (
               <>
                 <div
-                  className={`transition-all duration-500 ${
+                  className={`transition-all duration-1000 ${
                     !hideUpgradeOption ? "opacity-100" : "max-h-0 opacity-0"
                   }`}
                 >
