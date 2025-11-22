@@ -5,6 +5,7 @@ import requests
 import os
 import numpy as np
 import json
+import math
 
 app = Flask(__name__)
 root = '/api'
@@ -17,7 +18,14 @@ locations = {
     'Haidhausen': (48.136096, 11.608942),
     'Ostbahnhof': (48.127208, 11.607957),
     'Schwabing': (48.177723, 11.591010),
-    'Laim': (48.146124, 11.502870)
+    'Laim': (48.146124, 11.502870),
+    'Flughafen': (48.3538857382193, 11.788059296296359),
+    'Haupbahnhof': (48.14203459014511, 11.558140657633798),
+    'Stachus': (48.14011918838394, 11.566868086469782),
+    'Dachau': (48.26061816855299, 11.469966571125877),
+    'Lehel': (48.141499264319066, 11.584606215191291),
+    'Trudering': (48.12245453794639, 11.662685591910769),
+    'Freising': (48.38157801033135, 11.755000315191301)
 }
 
 def _vehicle_dict_maker(vehicle):
@@ -34,7 +42,8 @@ def _vehicle_dict_maker(vehicle):
             'availability': vehicle[9],
             'originalPricePerDay': vehicle[10],
             'bookDuration': vehicle[11],
-            'station': vehicle[12] 
+            'station': vehicle[12],
+            'color': vehicle[13]
         }
 
 
@@ -46,6 +55,27 @@ def calculate_euclidian(input, locations):
         loc_dist[k] = np.linalg.norm(input_coords - np.array(locations[k]))
     return loc_dist
 
+def calculate_haversine(input, locations):
+    R = 6371000  # Earth's radius in meters
+    lat1, lon1 = input
+    
+    loc_dist =  {}
+    for k, v in locations.items():
+        lat2,lon2 = locations[k]
+        
+        phi1 = math.radians(lat1)
+        phi2 = math.radians(lat2)
+        dphi = math.radians(lat2 - lat1)
+        dlambda = math.radians(lon2 - lon1)
+        
+        a = math.sin(dphi / 2)**2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2)**2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+        
+        loc_dist[k] = R * c
+        
+    return loc_dist
+
+    
 
 # get all vehicles
 @app.route(root + '/vehicles', methods=['GET'])
@@ -57,7 +87,7 @@ def get_all_vehicles():
         output.append(_vehicle_dict_maker(vehicle))
     return(output)
 
-@app.route(root + '/locations/<location>', methods=['GET'])
+@app.route(root + '/vehicles/locations/<location>', methods=['GET'])
 def get_all_vehicles_by_location(location):
     cursor.execute('SELECT * FROM vehicles WHERE station = ?', (location, ))
     vehicles = cursor.fetchall()
@@ -83,7 +113,12 @@ def get_all_available():
         output.append(_vehicle_dict_maker(vehicle))
     return(output)
 
-@app.route(root + '/availableVehicles/<location_name>', methods=['GET'])
+@app.route(root + '/locations_distance/<lat>/<long>', methods=['GET'])
+def get_distance_to_locations(lat, long):
+    return calculate_haversine((float(lat), float(long)), locations)
+
+
+@app.route(root + '/availableVehicles/locations/<location_name>', methods=['GET'])
 def get_all_available_by_location(location_name):
     cursor.execute('SELECT * FROM vehicles WHERE station = ? and availability = "True"', (location_name, ))
     vehicles = cursor.fetchall()
@@ -96,7 +131,7 @@ def get_all_available_by_location(location_name):
 def get_upsell(booked_id, lat, long):
     
     current_coords = (float(lat), float(long))
-    distance_to_stations = calculate_euclidian(current_coords, locations)
+    distance_to_stations = calculate_haversine(current_coords, locations)
     booked_vehicle = get_vehicles(booked_id)
     
     
@@ -130,19 +165,22 @@ def get_upsell(booked_id, lat, long):
     
     station_id_score = {}
     final_ids = []
+    loc_counter = 0
     for k, v in station_cluster.items():
         station_id_score[k] = []
         for vehicle in v:
             similarity_normalized = id_similarity[vehicle['id']]/max_similarity
-            if similarity_normalized >= 0.65:
+            if similarity_normalized >= 0.75:
                 station_id_score[k].append((vehicle['id'], similarity_normalized))
                 final_ids.append(vehicle['id'])
+        loc_counter += 1
+        if loc_counter == 4:
+            break
     
     
     final_vehicles = []
     for id in final_ids:
         final_vehicles.append(get_vehicles(id))
-    return(final_vehicles)
     return(final_vehicles)
     
     
@@ -171,7 +209,7 @@ def _similarity_scoring(vehicle_1, vehicle_2):
     
 
 if __name__ == '__main__':
-    coords = (48.159201, 11.504366)
-    print(calculate_euclidian(coords, locations))
+    coords = (48.20086835400505,11.627775696209682)
+    print(calculate_haversine(coords, locations))
     print(get_upsell(19 ,coords[0], coords[1]))
     app.run(port=8080)
