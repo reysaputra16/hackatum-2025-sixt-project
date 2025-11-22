@@ -1,5 +1,4 @@
 "use client";
-import sixtCar from "../../public/sixt-car.png";
 import {
   ArrowBigDown,
   ArrowBigRight,
@@ -13,30 +12,53 @@ import {
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import ChosenCarComponent from "../components/ChosenCarComponent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UpgradeCarComponent from "../components/UpgradeCarComponent";
 import { redirect } from "next/navigation";
 
 const bookingReference = "123ABC";
 
-const chosenCar: CarInformation = {
-  id: "30205",
-  brand: "VW",
-  image: sixtCar.src,
-  model: "Golf",
-  fuelType: "Petrol",
-  groupType: "Sedan",
-  transmissionType: "Automatic",
-  bagsCount: 2,
-  tyreType: "All-Year",
-  color: "Gray",
-  passengerCount: 5,
-  originalPricePerDay: 38.55,
-};
-
 export default function PrototypeApp() {
   const [hideChosenCar, setHideChosenCar] = useState(false);
   const [hideUpgradeOption, setHideUpgradeOption] = useState(true);
+  const [bookingCarInformation, setBookingCarInformation] =
+    useState<CarInformation>({
+      availability: "",
+      bagsCount: 0,
+      bookDuration: 0,
+      brand: "",
+      color: "",
+      fuelType: "",
+      groupType: "",
+      id: "",
+      images: "",
+      model: "",
+      originalPricePerDay: 0,
+      passangerCount: 0,
+      station: "",
+      transmissionType: "",
+    });
+
+  const bookingReference = "4";
+
+  useEffect(() => {
+    const fetchUpgrades = async () => {
+      const response = await fetch(
+        `http://localhost:8080/api/vehicles/${bookingReference}`,
+        { method: "GET" }
+      );
+
+      if (response.ok) {
+        const data_booking: CarInformation = await response.json();
+        console.log(data_booking);
+        setBookingCarInformation(data_booking);
+      } else {
+        console.log("Response did not work!");
+      }
+    };
+
+    fetchUpgrades();
+  }, []); // run once
   return (
     <div className="">
       {/* Container */}
@@ -59,7 +81,7 @@ export default function PrototypeApp() {
               }`}
             >
               <div className="max-w-3xl min-h-screen w-full flex flex-col bg-transparent">
-                <ChosenCarComponent chosenCar={chosenCar} />
+                <ChosenCarComponent {...bookingCarInformation} />
               </div>
               {/* Upgrade Button */}
               <div className="fixed bottom-8 max-w-3xl w-full flex justify-center px-4">

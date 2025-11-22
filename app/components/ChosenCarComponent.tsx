@@ -10,12 +10,28 @@ import {
   ChevronUp,
   CircleCheckBig,
 } from "lucide-react";
+import sixtCar from "../../public/sixt-car.png";
 
-interface ChosenCarProps {
-  chosenCar: CarInformation;
+function capitalizeFirstLetter(name: string): string {
+  return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
-const ChosenCarComponent = ({ chosenCar }: ChosenCarProps) => {
+const ChosenCarComponent = ({
+  availability,
+  bagsCount,
+  bookDuration,
+  brand,
+  color,
+  fuelType,
+  groupType,
+  id,
+  images,
+  model,
+  originalPricePerDay,
+  passangerCount,
+  station,
+  transmissionType,
+}: CarInformation) => {
   const [showMoreInformation, setShowMoreInformation] = useState(false);
 
   return (
@@ -27,7 +43,7 @@ const ChosenCarComponent = ({ chosenCar }: ChosenCarProps) => {
             Chosen Car
           </p>
           <div className="flex justify-center">
-            <img src={chosenCar.image} width={400} />
+            <img src={sixtCar.src} width={400} />
           </div>
         </div>
         {/* Info Body */}
@@ -36,39 +52,39 @@ const ChosenCarComponent = ({ chosenCar }: ChosenCarProps) => {
             {/* Car Name and Type */}
             <div>
               <p className="text-black text-3xl font-light px-4">
-                {chosenCar.brand} {chosenCar.model}
+                {brand} {model}
               </p>
               <p className="text-gray-500 text-md font-semibold px-4">
-                {chosenCar.groupType}
+                {groupType}
               </p>
             </div>
             {/* Car Main Attributes */}
             <div className="w-[50%] grid grid-cols-2 gap-3 p-4">
               <div className="flex flex-row space-x-2 w-full p-1.5">
                 <Fuel className="text-black" size={20} />
-                <p className="text-black text-sm">{chosenCar.fuelType}</p>
+                <p className="text-black text-sm">
+                  {capitalizeFirstLetter(fuelType)}
+                </p>
               </div>
               <div className="flex flex-row space-x-2 w-fit p-1.5">
                 <Car className="text-black" size={20} />
                 <p className="text-black text-sm">
-                  {chosenCar.transmissionType}
+                  {capitalizeFirstLetter(transmissionType)}
                 </p>
               </div>
               <div className="flex flex-row space-x-2 w-fit p-1.5">
                 <Briefcase className="text-black" size={20} />
-                <p className="text-black text-sm">{chosenCar.bagsCount}</p>
-              </div>
-              <div className="flex flex-row space-x-2 w-fit p-1.5">
-                <LifeBuoy className="text-black" size={20} />
-                <p className="text-black text-sm">{chosenCar.tyreType}</p>
+                <p className="text-black text-sm">{bagsCount}</p>
               </div>
               <div className="flex flex-row space-x-2 w-fit p-1.5">
                 <Palette className="text-black" size={20} />
-                <p className="text-black text-sm">{chosenCar.color}</p>
+                <p className="text-black text-sm">
+                  {capitalizeFirstLetter(color)}
+                </p>
               </div>
               <div className="flex flex-row space-x-2 w-fit p-1.5">
                 <Users className="text-black" size={20} />
-                <p className="text-black text-sm">{chosenCar.passengerCount}</p>
+                <p className="text-black text-sm">{passangerCount}</p>
               </div>
             </div>
           </div>
@@ -87,8 +103,8 @@ const ChosenCarComponent = ({ chosenCar }: ChosenCarProps) => {
               </p>
               <p className="flex flex-row space-x-2">
                 {<CircleCheckBig className="text-orange-500" />}
-                <span className="font-bold">Practical Size</span>: Fits up to 5
-                passengers with cushion-based seats
+                <span className="font-bold">Practical Size</span>: Fits up to{" "}
+                {passangerCount} passengers with cushion-based seats
               </p>
               <p className="flex flex-row space-x-2">
                 {<CircleCheckBig className="text-orange-500" />}

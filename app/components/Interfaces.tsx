@@ -1,7 +1,7 @@
 interface CarInformation {
   availability: string;
   bagsCount: number;
-  bookDuration: 25;
+  bookDuration: number;
   brand: string;
   color: string;
   fuelType: string;
@@ -15,8 +15,16 @@ interface CarInformation {
   transmissionType: string;
 }
 
+interface LocationInformation {
+  [location: string]: number;
+}
+
 interface UpgradeCarProps {
   car: CarInformation;
   isUserLocation: boolean;
   distance: number; // In km
+}
+
+interface ChosenCarProps {
+  chosenCar: CarInformation;
 }

@@ -15,125 +15,81 @@ import {
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import ChosenCarComponent from "../components/ChosenCarComponent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UpgradeCarComponent from "../components/UpgradeCarComponent";
 import { redirect, useSearchParams } from "next/navigation";
 
 const bookingReference = "123ABC";
 
-const carList: UpgradeCarProps[] = [
-  {
-    car: {
-      id: "230102390123",
-      brand: "BMW",
-      image: sixtCar.src,
-      model: "X5",
-      fuelType: "Electric",
-      groupType: "Sedan",
-      transmissionType: "Automatic",
-      bagsCount: 3,
-      tyreType: "Winter",
-      color: "Blue",
-      passengerCount: 5,
-      originalPricePerDay: 25.22,
-    },
-    isUserLocation: true,
-    distance: 0.7,
-  },
-  {
-    car: {
-      id: "32959245",
-      brand: "BMW",
-      image: sixtCar.src,
-      model: "X5",
-      fuelType: "Electric",
-      groupType: "Sedan",
-      transmissionType: "Automatic",
-      bagsCount: 3,
-      tyreType: "Winter",
-      color: "Blue",
-      passengerCount: 5,
-      originalPricePerDay: 25.22,
-    },
-    isUserLocation: true,
-    distance: 1.2,
-  },
-  {
-    car: {
-      id: "30129309213",
-      brand: "BMW",
-      image: sixtCar.src,
-      model: "X5",
-      fuelType: "Electric",
-      groupType: "Sedan",
-      transmissionType: "Automatic",
-      bagsCount: 3,
-      tyreType: "Winter",
-      color: "Blue",
-      passengerCount: 5,
-      originalPricePerDay: 25.22,
-    },
-    isUserLocation: true,
-    distance: 1.2,
-  },
-  {
-    car: {
-      id: "203912039",
-      brand: "BMW",
-      image: sixtCar.src,
-      model: "X5",
-      fuelType: "Electric",
-      groupType: "Sedan",
-      transmissionType: "Automatic",
-      bagsCount: 3,
-      tyreType: "Winter",
-      color: "Blue",
-      passengerCount: 5,
-      originalPricePerDay: 25.22,
-    },
-    isUserLocation: true,
-    distance: 2.8,
-  },
-  {
-    car: {
-      id: "994938294",
-      brand: "BMW",
-      image: sixtCar.src,
-      model: "X5",
-      fuelType: "Electric",
-      groupType: "Sedan",
-      transmissionType: "Automatic",
-      bagsCount: 3,
-      tyreType: "Winter",
-      color: "Blue",
-      passengerCount: 5,
-      originalPricePerDay: 25.22,
-    },
-    isUserLocation: true,
-    distance: 6.5,
-  },
-];
-
-const oldCar: CarInformation = {
-  id: "30205",
-  brand: "VW",
-  image: sixtCar.src,
-  model: "Golf",
-  fuelType: "Petrol",
-  groupType: "Sedan",
-  transmissionType: "Automatic",
-  bagsCount: 2,
-  tyreType: "All-Year",
-  color: "Gray",
-  passengerCount: 5,
-  originalPricePerDay: 38.55,
-};
+function capitalizeFirstLetter(name: string): string {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
 
 export default function ReviewPage() {
   const searchParams = useSearchParams();
 
+  // Chosen upgrade information
   const vehicle_id = searchParams.get("vehicle_id");
-  const vehicle_info = carList.find((car) => car.car.id == vehicle_id);
+  const brand = searchParams.get("brand");
+  const model = searchParams.get("model");
+  const groupType = searchParams.get("groupType");
+  const fuelType = searchParams.get("fuelType");
+  const transmissionType = searchParams.get("transmissionType");
+  const bagsCount = searchParams.get("bagsCount");
+  const color = searchParams.get("color");
+  const passangerCount = searchParams.get("passangerCount");
+
+  const [locationResults, setLocationResults] = useState<LocationInformation>();
+  const [bookingCarInformation, setBookingCarInformation] =
+    useState<CarInformation>({
+      availability: "",
+      bagsCount: 0,
+      bookDuration: 0,
+      brand: "SSS",
+      color: "",
+      fuelType: "",
+      groupType: "",
+      id: "",
+      images: "",
+      model: "",
+      originalPricePerDay: 0,
+      passangerCount: 0,
+      station: "",
+      transmissionType: "",
+    });
+
+  const bookingReference = "4";
+
+  useEffect(() => {
+    const fetchUpgrades = async () => {
+      const response_locations = await fetch(
+        "http://localhost:8080/api/locations_distance/48.20086835400505/11.627775696209683",
+        { method: "GET" }
+      );
+
+      const response_booking = await fetch(
+        `http://localhost:8080/api/vehicles/${bookingReference}`,
+        { method: "GET" }
+      );
+
+      if (response_locations.ok) {
+        const data_locations: LocationInformation =
+          await response_locations.json();
+        // console.log(data_locations);
+        setLocationResults(data_locations);
+      }
+
+      if (response_booking.ok) {
+        const data_booking: CarInformation = await response_booking.json();
+        // console.log(data_booking);
+        setBookingCarInformation(data_booking);
+      } else {
+        console.log("Response did not work!");
+      }
+    };
+
+    fetchUpgrades();
+  }, []); // run once
   return (
     <div className="">
       {/* Container */}
@@ -170,10 +126,11 @@ export default function ReviewPage() {
                             <div className="flex flex-col space-y-5">
                               <div>
                                 <h2 className="text-black text-xl font-bold">
-                                  {oldCar.brand} {oldCar.model}
+                                  {bookingCarInformation.brand}{" "}
+                                  {bookingCarInformation.model}
                                 </h2>
                                 <p className="text-gray-500 font-semibold text-sm">
-                                  {oldCar.groupType}
+                                  {bookingCarInformation.groupType}
                                 </p>
                               </div>
                               <img src={sixtCar.src} width={300} />
@@ -186,37 +143,31 @@ export default function ReviewPage() {
                             <div className="flex flex-row space-x-2 w-full p-1.5">
                               <Fuel className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {oldCar.fuelType}
+                                {bookingCarInformation.fuelType}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Car className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {oldCar.transmissionType}
+                                {bookingCarInformation.transmissionType}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Briefcase className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {oldCar.bagsCount}
-                              </p>
-                            </div>
-                            <div className="flex flex-row space-x-2 w-fit p-1.5">
-                              <LifeBuoy className="text-black" size={20} />
-                              <p className="text-black text-sm">
-                                {oldCar.tyreType}
+                                {bookingCarInformation.bagsCount}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Palette className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {oldCar.color}
+                                {bookingCarInformation.color}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Users className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {oldCar.passengerCount}
+                                {bookingCarInformation.passangerCount}
                               </p>
                             </div>
                           </div>
@@ -239,11 +190,10 @@ export default function ReviewPage() {
                             <div className="flex flex-col space-y-5">
                               <div>
                                 <h2 className="text-black text-xl font-bold">
-                                  {vehicle_info?.car.brand}{" "}
-                                  {vehicle_info?.car.model}
+                                  {brand} {model}
                                 </h2>
                                 <p className="text-gray-500 font-semibold text-sm">
-                                  {vehicle_info?.car.groupType}
+                                  {groupType}
                                 </p>
                               </div>
                               <img src={sixtCar.src} width={300} />
@@ -256,37 +206,31 @@ export default function ReviewPage() {
                             <div className="flex flex-row space-x-2 w-full p-1.5">
                               <Fuel className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {vehicle_info?.car.fuelType}
+                                {capitalizeFirstLetter(fuelType ?? "")}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Car className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {vehicle_info?.car.transmissionType}
+                                {capitalizeFirstLetter(transmissionType ?? "")}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Briefcase className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {vehicle_info?.car.bagsCount}
-                              </p>
-                            </div>
-                            <div className="flex flex-row space-x-2 w-fit p-1.5">
-                              <LifeBuoy className="text-black" size={20} />
-                              <p className="text-black text-sm">
-                                {vehicle_info?.car.tyreType}
+                                {bagsCount ?? 0}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Palette className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {vehicle_info?.car.color}
+                                {capitalizeFirstLetter(color ?? "")}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Users className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {vehicle_info?.car.passengerCount}
+                                {passangerCount}
                               </p>
                             </div>
                           </div>
