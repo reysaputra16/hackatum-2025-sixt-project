@@ -1,16 +1,18 @@
 interface CarInformation {
-  id: string;
+  availability: string;
+  bagsCount: number;
+  bookDuration: 25;
   brand: string;
-  image: string;
-  model: string;
+  color: string;
   fuelType: string;
   groupType: string;
-  transmissionType: string;
-  bagsCount: number;
-  tyreType: string;
-  color: string;
-  passengerCount: number;
+  id: string;
+  images: string;
+  model: string;
   originalPricePerDay: number;
+  passangerCount: number;
+  station: string;
+  transmissionType: string;
 }
 
 interface UpgradeCarProps {
