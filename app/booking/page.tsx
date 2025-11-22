@@ -20,7 +20,7 @@ import { redirect } from "next/navigation";
 const bookingReference = "123ABC";
 
 const chosenCar: CarInformation = {
-  id: 30205,
+  id: "30205",
   brand: "VW",
   image: sixtCar.src,
   model: "Golf",
