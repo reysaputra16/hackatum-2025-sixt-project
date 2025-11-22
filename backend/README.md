@@ -1,5 +1,6 @@
 # Upsell Logic
 
+
 ## Milestones:
 - [x] Define JSON schema that returns all the cars in a pickup station
 - [x] Define Upsell mvp logic
@@ -7,6 +8,9 @@
 - [ ] Create Mock dataset (20 vehicles across 4 different stations)
 - [ ] Create API endpoints for the two items above
 - [ ] Create logic to return potential vehicles to be upsold based on location (L2)
+
+## Pricing
+
 
 ## JSON schema that returns all the vehicles in a station
 
@@ -61,29 +65,22 @@ vehicle:
     brand: / # vw
     model: / # golf
     images: [] # link.png
-    bagsCount: ! # 1
-    passangerCount: ! # 3
-    groupType: / # Sedan, SUV, Van, Station, Convertible
+    bagsCount: ! # 1,2,3
+    passangerCount: ! # 2,4,5
+    groupType: / # Sedan, SUV, Convertible, Wagon, Van
     transmissionType: / # automatic, manual
     fuelType: / # petrol, electric 
-    isExcitingDiscount: ! # true, false
     vehicleStatus: ! # Available, Booked
-    vehicleCost !: 
-        currency: # EUR (hardcoded)
-        value: # 36400 <-- purchase cost of the vehicle (determines the luxury)
     pricing:
         currency: # EUR (hardcoded)
-        pricePerDay: ! # 35.99
         originalPricePerDay: ! # 39.99
-        discountPercentage: ! # 10
         totalPrice: ! # 143.96 <-- for the duration of the stay
     location: NEW FIELD
         stationId: & # MUC001
         latitude: & # 48.3558
         longitude: & # 11.7861
-    avaialbility:
-        availableFrom: # timestamp availabile from
-        availableUntil: # timestamp available until 
+    bookDuration: # days int
+    avaialbility: # true false
 ```
 
 ### JSON schema of a station
@@ -95,7 +92,7 @@ station:
     address: # freisinger landstrasse x, 80939 Munich
     coordinates: 
         latitude: # 48.3558
-        longitude: 11.7861
+        longitude: # 11.7861
     openingHours: # skipped
     timezone: # Europe/Berlin
     contact: # contact info
@@ -120,3 +117,5 @@ station:
 10. Notification prompted on user device (or email)
 11. user accepts deal
 12. booking updated
+
+
