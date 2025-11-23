@@ -132,13 +132,17 @@ export default function ReviewPage() {
                             <div className="flex flex-row space-x-2 w-full p-1.5">
                               <Fuel className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {bookingCarInformation.fuelType}
+                                {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                                  bookingCarInformation.fuelType
+                                )}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Car className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {bookingCarInformation.transmissionType}
+                                {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                                  bookingCarInformation.transmissionType
+                                )}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
@@ -150,7 +154,9 @@ export default function ReviewPage() {
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Palette className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {bookingCarInformation.color}
+                                {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                                  bookingCarInformation.color
+                                )}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
