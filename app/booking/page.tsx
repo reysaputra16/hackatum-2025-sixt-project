@@ -1,15 +1,5 @@
 "use client";
-import {
-  ArrowBigDown,
-  ArrowBigRight,
-  Briefcase,
-  Car,
-  Dot,
-  Fuel,
-  LifeBuoy,
-  Palette,
-  Users,
-} from "lucide-react";
+import { ArrowBigRight } from "lucide-react";
 import Navbar from "../components/Navbar";
 import ChosenCarComponent from "../components/ChosenCarComponent";
 import { useState, useEffect } from "react";

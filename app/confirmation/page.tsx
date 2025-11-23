@@ -1,23 +1,7 @@
 "use client";
 import sixtCar from "../../public/sixt-car.png";
-import {
-  ArrowBigDown,
-  ArrowBigRight,
-  Briefcase,
-  Car,
-  ChevronsDown,
-  CreditCard,
-  Dot,
-  Fuel,
-  LifeBuoy,
-  Palette,
-  Users,
-} from "lucide-react";
 import Navbar from "../components/Navbar";
-import ChosenCarComponent from "../components/ChosenCarComponent";
-import { useState } from "react";
-import UpgradeCarComponent from "../components/UpgradeCarComponent";
-import { redirect, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const bookingReference = "123ABC";
 

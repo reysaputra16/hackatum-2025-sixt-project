@@ -1,14 +1,11 @@
-import React from "react";
 import sixtCar from "../../public/sixt-car.png";
 import {
   Fuel,
   Car,
   Briefcase,
-  LifeBuoy,
   Palette,
   Users,
   MapPin,
-  Search,
   Store,
 } from "lucide-react";
 import { redirect } from "next/navigation";

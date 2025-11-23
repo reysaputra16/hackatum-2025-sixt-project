@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Fuel,
   Car,
   Briefcase,
-  LifeBuoy,
   Palette,
   Users,
   ChevronDown,

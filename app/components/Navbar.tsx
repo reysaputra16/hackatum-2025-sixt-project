@@ -1,4 +1,3 @@
-import React from "react";
 import sixtLogo from "../../public/sixt-logo.png";
 import { redirect } from "next/navigation";
 
