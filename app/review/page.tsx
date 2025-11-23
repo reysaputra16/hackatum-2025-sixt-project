@@ -18,12 +18,9 @@ import ChosenCarComponent from "../components/ChosenCarComponent";
 import { useState, useEffect } from "react";
 import UpgradeCarComponent from "../components/UpgradeCarComponent";
 import { redirect, useSearchParams } from "next/navigation";
+import FunctionCapitalizeFirstLetter from "../components/FunctionCapitalizeFirstLetter";
 
 const bookingReference = "123ABC";
-
-function capitalizeFirstLetter(name: string): string {
-  return name.charAt(0).toUpperCase() + name.slice(1);
-}
 
 export default function ReviewPage() {
   const searchParams = useSearchParams();
@@ -206,13 +203,17 @@ export default function ReviewPage() {
                             <div className="flex flex-row space-x-2 w-full p-1.5">
                               <Fuel className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {capitalizeFirstLetter(fuelType ?? "")}
+                                {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                                  fuelType ?? ""
+                                )}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Car className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {capitalizeFirstLetter(transmissionType ?? "")}
+                                {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                                  transmissionType ?? ""
+                                )}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
@@ -224,7 +225,9 @@ export default function ReviewPage() {
                             <div className="flex flex-row space-x-2 w-fit p-1.5">
                               <Palette className="text-black" size={20} />
                               <p className="text-black text-sm">
-                                {capitalizeFirstLetter(color ?? "")}
+                                {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                                  color ?? ""
+                                )}
                               </p>
                             </div>
                             <div className="flex flex-row space-x-2 w-fit p-1.5">

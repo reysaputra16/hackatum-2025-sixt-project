@@ -13,10 +13,7 @@ import {
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { useState, useEffect } from "react";
-
-function capitalizeFirstLetter(name: string): string {
-  return name.charAt(0).toUpperCase() + name.slice(1);
-}
+import FunctionCapitalizeFirstLetter from "./FunctionCapitalizeFirstLetter";
 
 const UpgradeCarComponent = () => {
   const [upgradeResults, setUpgradeResults] = useState<CarInformation[]>([]);
@@ -135,13 +132,17 @@ const UpgradeCarComponent = () => {
                 <div className="flex flex-row space-x-2 w-full p-1.5">
                   <Fuel className="text-black" size={20} />
                   <p className="text-black text-sm">
-                    {capitalizeFirstLetter(car.fuelType)}
+                    {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                      car.fuelType
+                    )}
                   </p>
                 </div>
                 <div className="flex flex-row space-x-2 w-fit p-1.5">
                   <Car className="text-black" size={20} />
                   <p className="text-black text-sm">
-                    {capitalizeFirstLetter(car.transmissionType)}
+                    {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                      car.transmissionType
+                    )}
                   </p>
                 </div>
                 <div className="flex flex-row space-x-2 w-fit p-1.5">
@@ -151,7 +152,9 @@ const UpgradeCarComponent = () => {
                 <div className="flex flex-row space-x-2 w-fit p-1.5">
                   <Palette className="text-black" size={20} />
                   <p className="text-black text-sm">
-                    {capitalizeFirstLetter(car.color)}
+                    {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                      car.color
+                    )}
                   </p>
                 </div>
                 <div className="flex flex-row space-x-2 w-fit p-1.5">

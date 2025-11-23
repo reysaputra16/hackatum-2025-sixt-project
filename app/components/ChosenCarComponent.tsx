@@ -11,10 +11,7 @@ import {
   CircleCheckBig,
 } from "lucide-react";
 import sixtCar from "../../public/sixt-car.png";
-
-function capitalizeFirstLetter(name: string): string {
-  return name.charAt(0).toUpperCase() + name.slice(1);
-}
+import FunctionCapitalizeFirstLetter from "./FunctionCapitalizeFirstLetter";
 
 const ChosenCarComponent = ({
   availability,
@@ -63,13 +60,17 @@ const ChosenCarComponent = ({
               <div className="flex flex-row space-x-2 w-full p-1.5">
                 <Fuel className="text-black" size={20} />
                 <p className="text-black text-sm">
-                  {capitalizeFirstLetter(fuelType)}
+                  {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                    fuelType
+                  )}
                 </p>
               </div>
               <div className="flex flex-row space-x-2 w-fit p-1.5">
                 <Car className="text-black" size={20} />
                 <p className="text-black text-sm">
-                  {capitalizeFirstLetter(transmissionType)}
+                  {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(
+                    transmissionType
+                  )}
                 </p>
               </div>
               <div className="flex flex-row space-x-2 w-fit p-1.5">
@@ -79,7 +80,7 @@ const ChosenCarComponent = ({
               <div className="flex flex-row space-x-2 w-fit p-1.5">
                 <Palette className="text-black" size={20} />
                 <p className="text-black text-sm">
-                  {capitalizeFirstLetter(color)}
+                  {FunctionCapitalizeFirstLetter.capitalizeFirstLetter(color)}
                 </p>
               </div>
               <div className="flex flex-row space-x-2 w-fit p-1.5">
