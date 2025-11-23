@@ -7,8 +7,6 @@ connection = sqlite3.connect("backend/sixt.db", check_same_thread=False)
 
 automatic_multiplier = 1.09
 
-# berg am laim starting
-
 group_type = {
     2: 'Coupe',
     5: 'Sedan',
