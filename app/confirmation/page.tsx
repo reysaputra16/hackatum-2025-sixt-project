@@ -2,7 +2,7 @@
 import Navbar from "../components/Navbar";
 import { useSearchParams } from "next/navigation";
 
-const bookingReference = "123ABC";
+const bookingReference = "4";
 
 export default function ConfirmationPage() {
   const searchParams = useSearchParams();

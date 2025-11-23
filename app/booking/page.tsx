@@ -6,8 +6,6 @@ import { useState, useEffect } from "react";
 import UpgradeCarComponent from "../components/UpgradeCarComponent";
 import { redirect } from "next/navigation";
 
-const bookingReference = "123ABC";
-
 export default function PrototypeApp() {
   const [hideChosenCar, setHideChosenCar] = useState(false);
   const [hideUpgradeOption, setHideUpgradeOption] = useState(true);

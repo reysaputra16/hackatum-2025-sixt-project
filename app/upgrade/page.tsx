@@ -2,7 +2,7 @@
 import Navbar from "../components/Navbar";
 import UpgradeCarComponent from "../components/UpgradeCarComponent";
 
-const bookingReference = "123ABC";
+const bookingReference = "4";
 
 export default function PrototypeApp() {
   return (

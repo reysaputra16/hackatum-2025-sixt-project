@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import { redirect, useSearchParams } from "next/navigation";
 import FunctionCapitalizeFirstLetter from "../components/FunctionCapitalizeFirstLetter";
 
-const bookingReference = "123ABC";
+const bookingReference = "4";
 
 export default function ReviewPage() {
   const searchParams = useSearchParams();
@@ -48,8 +48,6 @@ export default function ReviewPage() {
       station: "",
       transmissionType: "",
     });
-
-  const bookingReference = "4";
 
   useEffect(() => {
     const fetchUpgrades = async () => {
