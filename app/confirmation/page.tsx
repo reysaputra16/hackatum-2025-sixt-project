@@ -1,8 +1,7 @@
 "use client";
 import Navbar from "../components/Navbar";
 import { useSearchParams } from "next/navigation";
-
-const bookingReference = "4";
+import { bookingReference } from "../components/ConstantsBookingInformation";
 
 export default function ConfirmationPage() {
   const searchParams = useSearchParams();

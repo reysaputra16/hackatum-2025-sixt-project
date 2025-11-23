@@ -13,8 +13,7 @@ import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
 import { redirect, useSearchParams } from "next/navigation";
 import FunctionCapitalizeFirstLetter from "../components/FunctionCapitalizeFirstLetter";
-
-const bookingReference = "4";
+import { bookingReference } from "../components/ConstantsBookingInformation";
 
 export default function ReviewPage() {
   const searchParams = useSearchParams();

@@ -1,8 +1,7 @@
 "use client";
 import Navbar from "../components/Navbar";
 import UpgradeCarComponent from "../components/UpgradeCarComponent";
-
-const bookingReference = "4";
+import { bookingReference } from "../components/ConstantsBookingInformation";
 
 export default function PrototypeApp() {
   return (

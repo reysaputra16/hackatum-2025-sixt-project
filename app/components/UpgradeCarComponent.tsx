@@ -11,6 +11,7 @@ import {
 import { redirect } from "next/navigation";
 import { useState, useEffect } from "react";
 import FunctionCapitalizeFirstLetter from "./FunctionCapitalizeFirstLetter";
+import { bookingReference } from "./ConstantsBookingInformation";
 
 const UpgradeCarComponent = () => {
   const [upgradeResults, setUpgradeResults] = useState<CarInformation[]>([]);
@@ -32,8 +33,6 @@ const UpgradeCarComponent = () => {
       station: "",
       transmissionType: "",
     });
-
-  const bookingReference = "4";
 
   useEffect(() => {
     const fetchUpgrades = async () => {

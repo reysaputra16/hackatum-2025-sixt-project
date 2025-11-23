@@ -5,6 +5,7 @@ import ChosenCarComponent from "../components/ChosenCarComponent";
 import { useState, useEffect } from "react";
 import UpgradeCarComponent from "../components/UpgradeCarComponent";
 import { redirect } from "next/navigation";
+import { bookingReference } from "../components/ConstantsBookingInformation";
 
 export default function PrototypeApp() {
   const [hideChosenCar, setHideChosenCar] = useState(false);
@@ -26,8 +27,6 @@ export default function PrototypeApp() {
       station: "",
       transmissionType: "",
     });
-
-  const bookingReference = "4";
 
   useEffect(() => {
     const fetchUpgrades = async () => {
